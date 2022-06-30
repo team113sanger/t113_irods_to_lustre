@@ -1,0 +1,161 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema",
+	"$id": "https://raw.githubusercontent.com/./master/nextflow_schema.json",
+	"title": "Download CRAMs from iRODS to lustre",
+	"description": "",
+	"type": "object",
+	"definitions": {
+		"input_options": {
+			"title": "Input options",
+			"type": "object",
+			"fa_icon": "fas fa-terminal",
+			"description": "Define how the pipeline should find input data.",
+			"required": [
+				"run_mode"
+			],
+			"properties": {
+				"run_mode": {
+					"type": "string",
+					"default": "study_id",
+					"description": "Choose between 'study_id' or 'study_run_id'",
+					"fa_icon": "fas fa-angle-double-right"
+				},
+				"study_id": {
+					"type": "integer",
+					"description": "SequenceScape study id (e.g. 6902).'",
+					"fa_icon": "fas fa-angle-double-right"
+				},
+				"run_id": {
+					"type": "integer",
+					"description": "Run identifier (e.g. 45215).'",
+					"fa_icon": "fas fa-angle-double-right"
+				}
+			},
+			"Output options": {
+				"title": "Output options",
+				"type": "object",
+				"fa_icon": "fas fa-terminal",
+				"description": "Define where the pipeline should save output data.",
+				"required": [
+					"outdir"
+				],
+				"properties": {
+					"outdir": {
+						"type": "string",
+						"format": "directory-path",
+						"description": "The output directory where the results will be saved. You have to use absolute paths.",
+						"default": "${projectDir}/outdir",
+						"fa_icon": "fas fa-folder-open"
+					}
+				}
+			}
+		},
+		"output_options": {
+			"title": "Output options",
+			"type": "object",
+			"fa_icon": "fas fa-terminal",
+			"description": "Define where the pipeline should write results.",
+			"required": [
+				"outdir"
+			],
+			"properties": {
+				"outdir": {
+					"type": "string",
+					"description": "Absolute path to output directory.",
+					"fa_icon": "fas fa-angle-double-right"
+				},
+				"cram_dir": {
+					"type": "string",
+					"description": "Absolute path to where BAM/CRAM will be written.",
+					"default": "${params.outdir}/cram",
+					"fa_icon": "fas fa-cogs"
+				},
+				"reportdir": {
+					"type": "string",
+					"description": "Directory to keep pipeline Nextflow logs and reports.",
+					"default": "${params.outdir}/reports",
+					"fa_icon": "fas fa-cogs"
+				}
+			}
+		},
+		"workflow_options": {
+			"title": "Workflow options",
+			"type": "object",
+			"fa_icon": "fas fa-terminal",
+			"description": "Define workflow settings.",
+			"properties": {
+				"download_cram": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to download BAM/CRAM from iRODS.",
+					"fa_icon": "fas fa-angle-double-right"
+				}
+			}
+		},
+		"generic_options": {
+			"title": "Generic options",
+			"type": "object",
+			"fa_icon": "fas fa-file-import",
+			"description": "Less common options for the pipeline, typically set in a config file.",
+			"help_text": "These options are common to all nf-core pipelines and allow you to customise some of the core preferences for how the pipeline runs.\n\nTypically these options would be set in a Nextflow config file loaded for all pipeline runs, such as `~/.nextflow/config`.",
+			"properties": {
+				"help": {
+					"type": "boolean",
+					"description": "Display help text.",
+					"fa_icon": "fas fa-question-circle",
+					"hidden": true
+				},
+				"publish_dir_mode": {
+					"type": "string",
+					"default": "copy",
+					"description": "Method used to save pipeline results to output directory.",
+					"help_text": "The Nextflow `publishDir` option specifies which intermediate files should be saved to the output directory. This option tells the pipeline what method should be used to move these files. See [Nextflow docs](https://www.nextflow.io/docs/latest/process.html#publishdir) for details.",
+					"fa_icon": "fas fa-copy",
+					"enum": [
+						"symlink",
+						"rellink",
+						"link",
+						"copy",
+						"copyNoFollow",
+						"move"
+					],
+					"hidden": true
+				},
+				"monochrome_logs": {
+					"type": "boolean",
+					"description": "Do not use coloured log outputs.",
+					"fa_icon": "fas fa-palette",
+					"hidden": true
+				},
+				"show_hidden_params": {
+					"type": "boolean",
+					"fa_icon": "far fa-eye-slash",
+					"description": "Show all params when using `--help`",
+					"hidden": true,
+					"help_text": "By default, parameters set as _hidden_ in the schema are not shown on the command line when a user runs with `--help`. Specifying this option will tell the pipeline to show all parameters."
+				},
+				"validate_params": {
+					"type": "boolean",
+					"description": "Boolean whether to validate parameters against the schema at runtime",
+					"default": true,
+					"fa_icon": "fas fa-check-square",
+					"hidden": true
+				}
+			}
+		}
+	},
+    "allOf": [
+        {
+            "$ref": "#/definitions/input_options"
+        },
+        {
+            "$ref": "#/definitions/output_options"
+        },
+        {
+            "$ref": "#/definitions/workflow_options"
+        },
+        {
+            "$ref": "#/definitions/generic_options"
+        }
+    ]
+}
