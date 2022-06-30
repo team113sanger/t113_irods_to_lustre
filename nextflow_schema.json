@@ -72,6 +72,7 @@
 				"reportdir": {
 					"type": "string",
 					"description": "Directory to keep pipeline Nextflow logs and reports.",
+					"default": "${params.outdir}/reports",
 					"fa_icon": "fas fa-cogs"
 				}
 			}
