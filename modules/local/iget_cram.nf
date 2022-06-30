@@ -9,6 +9,7 @@ process GET_CRAM {
 
 	input:
 		tuple val(study_id), val(sample_id), val(cram_irods_object)
+		val cram_path
 
 	output:
 		tuple val(study_id), val(sample_id), path("*.cram"), emit: dnld_cram
@@ -19,13 +20,12 @@ process GET_CRAM {
   params.download_cram
 
 	script: 
-	dnld_filepath_prefix = "${params.cram_dir}/study_run_lane/"
 	"""
 	iget -K -f -I -v "${cram_irods_object}"
 	iget -K -f -I -v "${cram_irods_object}.crai" || true
 
 	dnld_filename="\$(basename *.cram)"
-	dnld_filepath="${dnld_filepath_prefix}/\$dnld_filename"
+	dnld_filepath="${cram_path}/study_run_lane/\$dnld_filename"
 	metadata_filepath="metadata.csv"
 	echo "study_id,sample_id,cram_file" > \$metadata_filepath
 	echo "${study_id},${sample_id},\${dnld_filepath}" >> \$metadata_filepath

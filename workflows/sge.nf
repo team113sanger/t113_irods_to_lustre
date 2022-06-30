@@ -86,7 +86,7 @@ workflow SGE {
 	//
 	GET_CRAM ( metadata_files
 							.splitCsv(header: true, sep: '\t')
-							.map{row->tuple(row.study_id, row.sample, row.file)} )
+							.map{row->tuple(row.study_id, row.sample, row.file)}, "$params.cram_dir" )
 	if (params.download_cram) {
 		GET_CRAM.out.dnld_cram_metadata
 			.collectFile(	keepHeader: true, 
