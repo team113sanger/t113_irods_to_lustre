@@ -9,11 +9,11 @@ process SAMTOOLS_MERGE {
     publishDir "${params.cram_dir}/study_sample", mode: params.publish_dir_mode, pattern: "*.cram*"
 
     input:
-    tuple val(study_id), val(sample_id), path(input_files)
+      tuple val(study_id), val(sample_id), path(input_files)
 
     output:
-    tuple val(study_id), val(sample_id), path("${study_id}_${sample_id}.cram"), emit: sample_cram
-		path("metadata.csv"), emit: merged_cram_metadata
+      tuple val(study_id), val(sample_id), path("${study_id}_${sample_id}.cram"), emit: sample_cram
+      path("metadata.csv"), emit: merged_cram_metadata
 
     when:
 		params.merge_crams_by_sample && params.download_cram
