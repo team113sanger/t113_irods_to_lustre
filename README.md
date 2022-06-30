@@ -14,6 +14,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 For documentation, see the pipeline [usage](docs/usage.md) documentation.
 
+This pipeline was developed based on/using materials from [wtsi-hgi](https://github.com/wtsi-hgi/nf_tower_irods_to_lustre) and [nf-core](https://nf-co.re/).
+
 ## Quick Start (Sanger farm5)
 
 1. Load Nextflow module
@@ -34,13 +36,13 @@ For documentation, see the pipeline [usage](docs/usage.md) documentation.
 	
 4. Start running your own analysis!
 
-   To download all sample BAM/CRAM for a study:
+   To download all sample CRAM for a study:
 
    ```console
    nextflow run t113_irods_to_lustre --run_mode study --study_id 6902
    ```
 
-   To download all sample BAM/CRAM from a single run for a study:
+   To download all sample CRAM from a single run for a study:
 
    ```console
    nextflow run t113_irods_to_lustre --run_mode study_run --study_id 6902 --run_id 45215
