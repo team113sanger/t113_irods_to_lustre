@@ -16,8 +16,8 @@
 			"properties": {
 				"run_mode": {
 					"type": "string",
-					"default": "study_id",
-					"description": "Choose between 'study_id' or 'study_run_id'",
+					"default": "study",
+					"description": "Choose between 'study' or 'study_run'",
 					"fa_icon": "fas fa-angle-double-right"
 				},
 				"study_id": {
