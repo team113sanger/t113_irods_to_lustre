@@ -9,7 +9,6 @@ A [Nextflow](https://www.nextflow.io) pipeline to be used internally at Sanger f
 1. Get metadata from Sanger iRODS
 2. Download lane BAM/CRAM from Sanger iRODS
 3. Merge lane BAM/CRAM into a sample BAM/CRAM
-4. Convert BAM/CRAM to FASTQ
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner.  The [Nextflow DSL2](https://www.nextflow.io/docs/latest/dsl2.html) implementation of this pipeline uses one container per process which makes it much easier to maintain and update software dependencies.
 

@@ -53,6 +53,7 @@ if (!params.run_mode) {
 include { METADATA_BY_STUDY } from '../modules/local/imeta_study' 
 include { METADATA_BY_STUDY_RUN } from '../modules/local/imeta_study_run.nf'
 include { GET_CRAM } from '../modules/local/iget_cram.nf'
+include { SAMTOOLS_MERGE } from '../modules/local/merge_cram_by_sample.nf'
 
 /*
 ========================================================================================
@@ -63,7 +64,7 @@ include { GET_CRAM } from '../modules/local/iget_cram.nf'
 workflow SGE {
 	if (params.run_mode == 'study') {
 		//
-		// SUBWORKFLOW: Get iRODS metadata per BAM/CRAM for all samples in a given study
+		// SUBWORKFLOW: Get iRODS metadata per CRAM for all samples in a given study
 		//
 		ch_study_ids = Channel.from(params.study_id)
 		//ch_study_ids =  Channel.from(6902, 6575)
@@ -71,7 +72,7 @@ workflow SGE {
 		metadata_files = METADATA_BY_STUDY.out.metadata_file
 	}	else if (params.run_mode == 'study_run') {
 		//
-		// SUBWORKFLOW: Get iRODS metadata per BAM/CRAM for all samples in a given study and run
+		// SUBWORKFLOW: Get iRODS metadata per CRAM for all samples in a given study and run
 		//
 		// TO-DO: Check for multiple studies and error out
 		ch_study_id = Channel.from(params.study_id).first()
@@ -81,23 +82,30 @@ workflow SGE {
 	}
 
 	//
-	// SUBWORKFLOW: Read in all metadata files and select relevant fields
+	// SUBWORKFLOW: Download CRAM from iRODS (lane)
 	//
-	ch_imeta = metadata_files
+	GET_CRAM ( metadata_files
 							.splitCsv(header: true, sep: '\t')
-							.map{row->tuple(row.study_id, row.sample, row.file)}
+							.map{row->tuple(row.study_id, row.sample, row.file)} )
+	if (params.download_cram) {
+		GET_CRAM.out.dnld_cram_metadata
+			.collectFile(	keepHeader: true, 
+										name: "downloaded_cram_paths.all.csv", 
+										storeDir: "$params.outdir/metadata")
+	}
 
 	//
-	// SUBWORKFLOW: Download BAM/CRAM from iRODS (lane)
-	//
-	GET_CRAM ( ch_imeta )
-	dnld_cram_path = GET_CRAM.out.irods_cram
-
-	//
-	// SUBWORKFLOW: Group metadata by study and sample
+	// SUBWORKFLOW: Merge CRAMs by sample and study
 	// Grouping by study as sample id may be shared across studies (e.g. WGS, WES)
 	//
-	ch_cram_by_sample = dnld_cram_path.groupTuple(by: [0,1])
+	ch_cram_by_sample = GET_CRAM.out.dnld_cram.groupTuple(by: [0,1])
+	SAMTOOLS_MERGE(ch_cram_by_sample)
+	if (params.download_cram && params.merge_crams_by_sample) {
+		SAMTOOLS_MERGE.out.merged_cram_metadata
+			.collectFile(	keepHeader: true, 
+										name: "downloaded_cram_paths.sample.csv", 
+										storeDir: "$params.outdir/metadata")
+	}
 }
 
 /*

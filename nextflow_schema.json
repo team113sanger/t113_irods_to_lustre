@@ -66,7 +66,7 @@
 				},
 				"cram_dir": {
 					"type": "string",
-					"description": "Absolute path to where BAM/CRAM will be written.",
+					"description": "Absolute path to where CRAM will be written.",
 					"default": "${params.outdir}/cram",
 					"fa_icon": "fas fa-cogs"
 				},
@@ -87,7 +87,13 @@
 				"download_cram": {
 					"type": "boolean",
 					"default": true,
-					"description": "Whether to download BAM/CRAM from iRODS.",
+					"description": "Whether to download CRAM from iRODS.",
+					"fa_icon": "fas fa-angle-double-right"
+				},
+				"merge_crams_by_sample": {
+					"type": "boolean",
+					"default": true,
+					"description": "Whether to merge CRAMs by study and sample.",
 					"fa_icon": "fas fa-angle-double-right"
 				}
 			}
