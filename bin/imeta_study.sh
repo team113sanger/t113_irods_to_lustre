@@ -74,7 +74,7 @@ metaquery="${metaquery}"'"'
 echo "Getting sample metadata from iRODS..."
 jq --arg study_id $study_id -n '{avus: [
 	{attribute: "study_id", value: $study_id, o: "="},
-	{attribute: "type", value: ["cram","bam"], o: "in"}, 
+	{attribute: "type", value: ["cram"], o: "in"}, 
 	{attribute: "target", value: "1", o: "="}]}' |\
 "${baton_path}/baton-metaquery" \
 	--zone "${zone}" --obj --avu |\
