@@ -67,13 +67,11 @@
 				"cram_dir": {
 					"type": "string",
 					"description": "Absolute path to where CRAM will be written.",
-					"default": "${params.outdir}/cram",
 					"fa_icon": "fas fa-cogs"
 				},
 				"reportdir": {
 					"type": "string",
 					"description": "Directory to keep pipeline Nextflow logs and reports.",
-					"default": "${params.outdir}/reports",
 					"fa_icon": "fas fa-cogs"
 				}
 			}
