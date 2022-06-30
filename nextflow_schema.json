@@ -67,7 +67,6 @@
 				"cram_dir": {
 					"type": "string",
 					"description": "Absolute path to where CRAM will be written.",
-					"default": "${params.outdir}/cram",
 					"fa_icon": "fas fa-cogs"
 				},
 				"reportdir": {
