@@ -32,6 +32,14 @@ if (params.run_mode == 'study_run' & !params.run_id ) {
 	exit 1
 }
 
+// Make sure CRAM directory is specified if download_cram is true
+if (params.download_cram & !params.cram_dir) {
+	printErr("Absolute path for 'cram_dir' must be provided when 'download_cram' is true.")
+	exit 1
+} else {
+	file(params.cram_dir, checkIfExists: true)
+}
+
 // Make sure and output directory has been specified
 if (!params.run_mode) {
 	printErr("No outdir provided.")
