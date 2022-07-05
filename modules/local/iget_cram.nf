@@ -6,6 +6,7 @@ params.options = [:]
 process GET_CRAM {
 	tag "${study_id}_${sample_id}"
 	publishDir "${params.cram_dir}/study_run_lane", mode: params.publish_dir_mode, pattern: "*.cram*"
+	publishDir "${params.meta_dir}", mode: params.publish_dir_mode, pattern: "*.metadata.csv*"
 
 	input:
 		tuple val(study_id), val(sample_id), val(cram_irods_object)

@@ -69,6 +69,11 @@
 					"description": "Absolute path to where CRAM will be written.",
 					"fa_icon": "fas fa-cogs"
 				},
+				"meta_dir": {
+					"type": "string",
+					"description": "Absolute path to where metadata will be written.",
+					"fa_icon": "fas fa-cogs"
+				},
 				"reportdir": {
 					"type": "string",
 					"description": "Directory to keep pipeline Nextflow logs and reports.",
