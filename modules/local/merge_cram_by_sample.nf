@@ -7,6 +7,7 @@ include { saveFiles } from './functions'
 process SAMTOOLS_MERGE {
     tag "samtools_merge_${sample_id}"
     publishDir "${params.cram_dir}/study_sample", mode: params.publish_dir_mode, pattern: "*.cram*"
+    publishDir "${params.meta_dir}", mode: params.publish_dir_mode, pattern: "*metadata.csv"
 
     input:
       tuple val(study_id), val(sample_id), path(input_files)

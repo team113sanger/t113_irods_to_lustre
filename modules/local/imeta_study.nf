@@ -5,9 +5,7 @@ params.options = [:]
 
 process METADATA_BY_STUDY {
 	tag "imeta_${study_id}"
-	publishDir "${params.outdir}",
-		mode: params.publish_dir_mode,
-		saveAs: { filename -> saveFiles(filename:filename, options:params.options, publish_dir:'metadata', meta:[:], publish_by_meta:[]) }
+	publishDir "${params.meta_dir}", mode: params.publish_dir_mode, pattern: "*_samples.tsv"
 
 	input:
 		val study_id

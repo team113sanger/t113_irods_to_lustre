@@ -40,11 +40,21 @@ if (params.download_cram & !params.cram_dir) {
 	file(params.cram_dir, checkIfExists: true)
 }
 
-// Make sure and output directory has been specified
-if (!params.run_mode) {
+// Make sure an output directory has been specified
+if (!params.outdir) {
 	printErr("No outdir provided.")
 	exit 1
-}	
+}	else {
+	file(params.outdir, checkIfExists: true)
+}
+
+// Make sure a metadata directory has been specified
+if (!params.meta_dir) {
+	printErr("No meta_dir provided.")
+	exit 1
+}	else {
+	file(params.meta_dir, checkIfExists: true)
+}
 
 /*
 ========================================================================================
@@ -99,7 +109,7 @@ workflow SGE {
 		GET_CRAM.out.dnld_cram_metadata
 			.collectFile(	keepHeader: true, 
 										name: "downloaded_cram_paths.all.csv", 
-										storeDir: "$params.outdir/metadata")
+										storeDir: "$params.meta_dir")
 	}
 
 	//
@@ -112,7 +122,7 @@ workflow SGE {
 		SAMTOOLS_MERGE.out.merged_cram_metadata
 			.collectFile(	keepHeader: true, 
 										name: "downloaded_cram_paths.sample.csv", 
-										storeDir: "$params.outdir/metadata")
+										storeDir: "$params.meta_dir")
 	}
 }
 
