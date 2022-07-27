@@ -20,7 +20,7 @@ declare -A fields=(
 	['is_paired_read']='____\($a.avus | .[] | select(.attribute == "is_paired_read") | .value)'
 	['md5']='____\($a.avus | .[] | select(.attribute == "md5") | .value)'
 	['alignment']='____\($a.avus | .[] | select(.attribute == "alignment") | .value)'
-	['sample_public_name']='____\($a.avus | .[] | select(.attribute == "sample_public_name") | .value)'
+	['sample_supplier_name']='____\($a.avus | .[] | select(.attribute == "sample_supplier_name") | .value)'
 	['study_id']='____\($a.avus | .[] | select(.attribute == "study_id") | .value)'
 	['study']='____\($a.avus | .[] | select(.attribute == "study") | .value)'
 )
