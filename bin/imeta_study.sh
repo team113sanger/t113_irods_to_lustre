@@ -14,7 +14,6 @@ zone="seq"
 # These may differ by study so will need revising
 declare -A fields=(	
 	['id_run']='____\($a.avus | .[] | select(.attribute == "id_run") | .value)'
-	['lane']='____\($a.avus | .[] | select(.attribute == "lane") | .value)'
 	['tag_index']='____\($a.avus | .[] | select(.attribute == "tag_index") | .value)'
 	['total_reads']='____\($a.avus | .[] | select(.attribute == "total_reads") | .value)'
 	['is_paired_read']='____\($a.avus | .[] | select(.attribute == "is_paired_read") | .value)'
